@@ -153,9 +153,13 @@ Suggested walkthrough:
 ```powershell
 python manage.py test
 ```
-<img width="1366" height="768" alt="Screenshot 2026-11-06 192251" src="https://github.com/user-attachments/assets/1a1e74e4-c4c7-418c-bc9b-e1c19bed4fa6" />
-
-
+<img width="1366" height="768" alt="Screenshot 2026-11-06 192045" src="https://github.com/user-attachments/assets/059168b7-39a9-4a4b-bc3d-5269f9a695e6" />
+<img width="1366" height="768" alt="Screenshot 2026-11-06 192058" src="https://github.com/user-attachments/assets/3b0bf39e-af49-474e-9f1e-8fec339f9e0e" />
+<img width="1366" height="768" alt="Screenshot 2026-11-06 192156" src="https://github.com/user-attachments/assets/68932328-c4d4-4b0c-a0c9-9d20df59b0f7" />
+<img width="1366" height="768" alt="Screenshot 2026-11-06 192208" src="https://github.com/user-attachments/assets/2d4fc718-b821-4884-bcd5-c9d5680d1f81" />
+<img width="1366" height="768" alt="Screenshot 2026-11-06 192218" src="https://github.com/user-attachments/assets/bc9c1aa6-fc3d-4d23-81e1-3b61d2b5fd89" />
+<img width="1366" height="768" alt="Screenshot 2026-11-06 192231" src="https://github.com/user-attachments/assets/bb4e68ca-a986-4d80-ab92-f7f56cced8ec" />
+<img width="1366" height="768" alt="Screenshot 2026-11-06 192251" src="https://github.com/user-attachments/assets/2fccc140-f3ac-4bf1-98bf-2521c7e6e2b9" />
 
 1. **Home page** — introduces CodeArena and its main features.
 2. **Problem list** — shows the problem catalog, difficulty, and points.
