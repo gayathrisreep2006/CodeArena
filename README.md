@@ -4,8 +4,6 @@
 
 CodeArena lets players solve programming problems, submit Python solutions for automatic judging, and compete in timed coding contests. Hosts can manage problems and test cases, run contest rooms, and review results from a leaderboard.
 
-> **Project status:** Academic/demo project. The code runner uses a subprocess, a time limit, and an output limit, but it is **not a security sandbox**. Do not deploy it publicly or run untrusted submissions on a machine with sensitive data.
-
 ## Table of contents
 
 - [Features](#features)
@@ -155,12 +153,9 @@ Suggested walkthrough:
 ```powershell
 python manage.py test
 ```
+<img width="1366" height="768" alt="Screenshot 2026-11-06 192251" src="https://github.com/user-attachments/assets/1a1e74e4-c4c7-418c-bc9b-e1c19bed4fa6" />
 
-## Screenshots to add
 
-Add your own screenshots to a folder such as `docs/images/` and embed them below. Capture the application with realistic demo data, crop out unrelated desktop/browser details, and make sure no personal information or secrets are visible.
-
-Recommended screenshots:
 
 1. **Home page** — introduces CodeArena and its main features.
 2. **Problem list** — shows the problem catalog, difficulty, and points.
@@ -170,12 +165,6 @@ Recommended screenshots:
 6. **Leaderboard** — shows participant rankings and scores.
 7. **Host problem/test-case management** — demonstrates how problems and cases are maintained.
 8. **Dashboard or CSV results** — shows the summary statistics or exported contest results.
-
-Once you add an image file, include it in the README like this (replace the filename with your screenshot):
-
-```markdown
-![CodeArena home page](docs/images/home-page.png)
-```
 
 ## Limitations and security note
 
