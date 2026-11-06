@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+venv/
+.venv/
+__pycache__/
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+.vscode/
+.idea/
+theme_review.txt

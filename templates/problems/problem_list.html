@@ -1,0 +1,88 @@
+
+{% extends "base.html" %}
+
+{% block body_class %}page-problems{% endblock %}
+{% block title %}Problems - CodeArena{% endblock %}
+
+{% block content %}
+<div class="problems-page">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <h2 class="problems-title">Problems</h2>
+
+    {% if user.is_authenticated and user.profile.is_host %}
+      <a class="btn btn-success" href="{% url 'problems:create' %}">
+        + New problem
+      </a>
+    {% endif %}
+  </div>
+
+  <form class="row g-2 my-3 problems-filter" method="get">
+    <div class="col-md-5">
+      <input class="form-control" name="q" value="{{ q }}"
+             placeholder="Search problems">
+    </div>
+
+    <div class="col-md-3">
+      <select class="form-select" name="difficulty">
+        <option value="">All difficulties</option>
+        <option value="easy" {% if difficulty == "easy" %}selected{% endif %}>Easy</option>
+        <option value="medium" {% if difficulty == "medium" %}selected{% endif %}>Medium</option>
+        <option value="hard" {% if difficulty == "hard" %}selected{% endif %}>Hard</option>
+      </select>
+    </div>
+
+    <div class="col-auto">
+      <button class="btn btn-primary">Filter</button>
+      <a class="btn btn-outline-secondary" href="{% url 'problems:list' %}">Reset</a>
+    </div>
+  </form>
+
+  <div class="table-responsive problems-table-wrap">
+    <table class="table table-hover align-middle problems-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Title</th>
+          <th>Difficulty</th>
+          <th>Points</th>
+          <th>By</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for p in page_obj %}
+        <tr>
+          <td>
+            {% if p.id in solved_ids %}
+              <span class="text-success" title="Solved">&#10003;</span>
+            {% endif %}
+          </td>
+
+          <td>
+            <a href="{% url 'problems:detail' p.pk %}">{{ p.title }}</a>
+            {% if not p.is_published %}
+              <span class="badge text-bg-warning">Draft</span>
+            {% endif %}
+          </td>
+
+          <td>
+            <span class="badge {% if p.difficulty == 'easy' %}text-bg-success{% elif p.difficulty == 'medium' %}text-bg-warning{% else %}text-bg-danger{% endif %}">
+              {{ p.get_difficulty_display }}
+            </span>
+          </td>
+
+          <td>{{ p.points }}</td>
+          <td>{{ p.created_by.username }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="text-muted">No problems found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include "partials/pagination.html" %}
+</div>
+{% endblock %}

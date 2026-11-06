@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-room-form{% endblock %}
+{% block title %}New room - CodeArena{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-md-7">
+  <h2 class="mb-3">Create contest room</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% include "partials/form_fields.html" with form=form %}
+    <button class="btn btn-primary" type="submit">Create room</button>
+    <a class="btn btn-outline-secondary" href="{% url 'arena:list' %}">Cancel</a>
+  </form>
+</div></div>
+{% endblock %}

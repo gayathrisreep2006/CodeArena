@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-problem-detail{% endblock %}
+{% block title %}{{ problem.title }} - CodeArena{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+  <div>
+    <h2>{{ problem.title }}</h2>
+    <span class="badge {% if problem.difficulty == 'easy' %}text-bg-success{% elif problem.difficulty == 'medium' %}text-bg-warning{% else %}text-bg-danger{% endif %}">{{ problem.get_difficulty_display }}</span>
+    <span class="badge text-bg-primary">{{ problem.points }} points</span>
+    <span class="badge text-bg-secondary">{{ problem.time_limit }}s per test</span>
+    {% if not problem.is_published %}<span class="badge text-bg-warning">Draft</span>{% endif %}
+  </div>
+  {% if can_manage %}
+  <div class="d-flex gap-2">
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'problems:testcases' problem.pk %}">Test cases</a>
+    <a class="btn btn-sm btn-outline-secondary" href="{% url 'problems:edit' problem.pk %}">Edit</a>
+    <a class="btn btn-sm btn-outline-danger" href="{% url 'problems:delete' problem.pk %}">Delete</a>
+  </div>
+  {% endif %}
+</div>
+<hr>
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="card"><div class="card-body">{{ problem.description|linebreaks }}</div></div>
+    {% for s in samples %}
+      <div class="card mt-3"><div class="card-body py-2">
+        <strong>Sample {{ forloop.counter }}</strong>
+        <div class="small text-muted">Input</div><pre class="mb-1">{{ s.input_data }}</pre>
+        <div class="small text-muted">Output</div><pre class="mb-0">{{ s.expected_output }}</pre>
+      </div></div>
+    {% endfor %}
+  </div>
+  <div class="col-lg-6">
+    {% if user.is_authenticated %}
+      <form method="post" action="{% url 'judge:submit' problem.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="room" value="{{ room_code }}">
+        <label class="form-label fw-bold">Your Python solution{% if room_code %} <span class="badge text-bg-warning">Contest {{ room_code }}</span>{% endif %}</label>
+        <textarea class="form-control code-box" name="code" rows="14" required spellcheck="false"
+                  placeholder="# Read input with input(), print the answer&#10;a, b = map(int, input().split())&#10;print(a + b)"></textarea>
+        <button class="btn btn-success mt-2" type="submit">Submit</button>
+      </form>
+      {% if my_submissions %}
+      <h6 class="mt-4">Your recent submissions</h6>
+      <ul class="list-group">
+        {% for s in my_submissions %}
+          <li class="list-group-item d-flex justify-content-between">
+            <a href="{% url 'judge:detail' s.pk %}">{{ s.submitted_at|date:"d M, H:i" }}</a>
+            <span>{{ s.get_verdict_display }} ({{ s.passed_cases }}/{{ s.total_cases }})</span>
+          </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    {% else %}
+      <div class="alert alert-info">Please <a href="{% url 'accounts:login' %}?next={{ request.path }}">login</a> to submit a solution.</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

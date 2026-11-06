@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-problem-form{% endblock %}
+{% block title %}{{ heading }} - CodeArena{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-md-8">
+  <h2 class="mb-3">{{ heading }}</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% include "partials/form_fields.html" with form=form %}
+    <button class="btn btn-primary" type="submit">Save</button>
+    <a class="btn btn-outline-secondary" href="{% url 'problems:list' %}">Cancel</a>
+  </form>
+</div></div>
+{% endblock %}

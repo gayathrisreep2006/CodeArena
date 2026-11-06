@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-room-list{% endblock %}
+{% block title %}Contest Rooms - CodeArena{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+  <h2>Contest Rooms</h2>
+  {% if user.profile.is_host %}<a class="btn btn-success" href="{% url 'arena:create' %}">+ New room</a>{% endif %}
+</div>
+<form class="row g-2 my-3" method="post" action="{% url 'arena:join' %}">
+  {% csrf_token %}
+  <div class="col-md-4 col-8"><input class="form-control text-uppercase" name="code" maxlength="6" placeholder="Enter room code to join" required></div>
+  <div class="col-auto"><button class="btn btn-primary">Join</button></div>
+</form>
+<form class="row g-2 mb-3" method="get">
+  <div class="col-md-4"><input class="form-control" name="q" value="{{ q }}" placeholder="Search by title or code"></div>
+  <div class="col-md-3">
+    <select class="form-select" name="status">
+      <option value="">All statuses</option>
+      <option value="waiting" {% if status == "waiting" %}selected{% endif %}>Waiting</option>
+      <option value="live" {% if status == "live" %}selected{% endif %}>Live</option>
+      <option value="finished" {% if status == "finished" %}selected{% endif %}>Finished</option>
+    </select>
+  </div>
+  <div class="col-auto"><button class="btn btn-outline-primary">Filter</button> <a class="btn btn-outline-secondary" href="{% url 'arena:list' %}">Reset</a></div>
+</form>
+<table class="table table-hover align-middle">
+  <thead><tr><th>Title</th><th>Code</th><th>Host</th><th>Players</th><th>Status</th></tr></thead>
+  <tbody>
+    {% for r in page_obj %}
+      <tr>
+        <td><a href="{% url 'arena:detail' r.code %}">{{ r.title }}</a></td>
+        <td><code>{{ r.code }}</code></td><td>{{ r.host.username }}</td><td>{{ r.player_count }}</td>
+        <td><span class="badge {% if r.status == 'live' %}text-bg-success{% elif r.status == 'waiting' %}text-bg-warning{% else %}text-bg-secondary{% endif %}">{{ r.get_status_display }}</span></td>
+      </tr>
+    {% empty %}<tr><td colspan="5" class="text-muted">No contest rooms found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include "partials/pagination.html" %}
+{% endblock %}

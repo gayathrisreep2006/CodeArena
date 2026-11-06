@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-testcases{% endblock %}
+{% block title %}Test cases - CodeArena{% endblock %}
+{% block content %}
+<h2>Test cases: {{ problem.title }}</h2>
+<a href="{% url 'problems:detail' problem.pk %}">&larr; Back to problem</a>
+<div class="row mt-3 g-4">
+  <div class="col-md-6">
+    <h5>Add test case</h5>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% include "partials/form_fields.html" with form=form %}
+      <button class="btn btn-primary" type="submit">Add</button>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <h5>Existing ({{ cases|length }})</h5>
+    {% for c in cases %}
+      <div class="card mb-2"><div class="card-body py-2">
+        <div class="d-flex justify-content-between">
+          <strong>#{{ forloop.counter }} {% if c.is_sample %}<span class="badge text-bg-info">Sample</span>{% else %}<span class="badge text-bg-secondary">Hidden</span>{% endif %}</strong>
+          <form method="post" action="{% url 'problems:testcase_delete' problem.pk c.pk %}">{% csrf_token %}
+            <button class="btn btn-sm btn-outline-danger">Delete</button></form>
+        </div>
+        <div class="small text-muted">Input</div><pre class="mb-1">{{ c.input_data }}</pre>
+        <div class="small text-muted">Expected output</div><pre class="mb-0">{{ c.expected_output }}</pre>
+      </div></div>
+    {% empty %}<p class="text-muted">No test cases yet. A problem without test cases cannot be judged.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

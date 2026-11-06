@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-room-detail{% endblock %}
+{% block title %}{{ room.title }} - CodeArena{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+  <div>
+    <h2>{{ room.title }}</h2>
+    <span class="text-muted">Host: {{ room.host.username }} &middot; Code: <code class="fs-5">{{ room.code }}</code> &middot; {{ room.duration_minutes }} min</span>
+  </div>
+  <div class="text-end">
+    <span id="status-badge" class="badge fs-6 {% if room.status == 'live' %}text-bg-success{% elif room.status == 'waiting' %}text-bg-warning{% else %}text-bg-secondary{% endif %}">{{ room.get_status_display }}</span>
+    <div id="timer" class="fs-4 fw-bold"></div>
+  </div>
+</div>
+
+{% if can_manage %}
+<div class="d-flex gap-2 my-3">
+  {% if room.status == "waiting" %}
+    <form method="post" action="{% url 'arena:start' room.code %}">{% csrf_token %}<button class="btn btn-success">Start contest</button></form>
+  {% elif room.status == "live" %}
+    <form method="post" action="{% url 'arena:finish' room.code %}">{% csrf_token %}<button class="btn btn-danger">Finish now</button></form>
+  {% endif %}
+  <a class="btn btn-outline-primary" href="{% url 'dashboard:room_csv' room.code %}">Download results (CSV)</a>
+</div>
+{% endif %}
+
+{% if not is_participant and room.status != "finished" and not can_manage %}
+<form method="post" action="{% url 'arena:join' %}" class="my-3">
+  {% csrf_token %}<input type="hidden" name="code" value="{{ room.code }}">
+  <button class="btn btn-primary">Join this contest</button>
+</form>
+{% endif %}
+
+<div class="row g-4 mt-1">
+  <div class="col-lg-5">
+    <h5>Problems</h5>
+    <ul class="list-group">
+      {% for p in problems %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {% if room.status == "live" and is_participant %}
+            <a href="{% url 'problems:detail' p.pk %}?room={{ room.code }}">{{ p.title }}</a>
+          {% else %}{{ p.title }}{% endif %}
+          <span class="badge text-bg-primary">{{ p.points }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+    {% if room.status == "waiting" %}<p class="text-muted small mt-2">Problems unlock for participants when the host starts the contest.</p>{% endif %}
+    {% if room.status == "live" and not is_participant %}<p class="text-muted small mt-2">Join the contest to submit solutions.</p>{% endif %}
+  </div>
+  <div class="col-lg-7">
+    <h5>Leaderboard <small class="text-muted fs-6">(auto-refreshes)</small></h5>
+    <table class="table table-sm table-striped align-middle">
+      <thead><tr><th>#</th><th>Player</th><th>Solved</th><th>Score</th><th>Penalty (min)</th><th>Wrong</th></tr></thead>
+      <tbody id="lb-body">
+        {% for r in leaderboard %}
+          <tr><td>{{ r.rank }}</td><td>{{ r.username }}</td><td>{{ r.solved }}</td><td>{{ r.score }}</td><td>{{ r.penalty }}</td><td>{{ r.wrong }}</td></tr>
+        {% empty %}<tr><td colspan="6" class="text-muted">No players yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const jsonUrl = "{% url 'arena:leaderboard_json' room.code %}";
+  let status = "{{ room.status }}";
+  let remaining = {{ remaining }};
+  const timerEl = document.getElementById("timer");
+  const bodyEl = document.getElementById("lb-body");
+
+  function fmt(sec) {
+    const m = String(Math.floor(sec / 60)).padStart(2, "0");
+    const s = String(sec % 60).padStart(2, "0");
+    return m + ":" + s;
+  }
+  function drawTimer() {
+    if (status === "live") timerEl.textContent = "Time left " + fmt(remaining);
+    else if (status === "finished") timerEl.textContent = "Contest over";
+    else timerEl.textContent = "Not started";
+  }
+  function drawBoard(rows) {
+    bodyEl.innerHTML = "";
+    if (!rows.length) {
+      const tr = bodyEl.insertRow(); const td = tr.insertCell(); td.colSpan = 6;
+      td.className = "text-muted"; td.textContent = "No players yet."; return;
+    }
+    rows.forEach(r => {
+      const tr = bodyEl.insertRow();
+      [r.rank, r.username, r.solved, r.score, r.penalty, r.wrong].forEach(v => {
+        tr.insertCell().textContent = v;   // textContent: safe against HTML injection
+      });
+    });
+  }
+  async function refresh() {
+    try {
+      const res = await fetch(jsonUrl, {headers: {"Accept": "application/json"}});
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.status !== status) { location.reload(); return; }   // started or finished
+      remaining = data.remaining_seconds;
+      drawBoard(data.leaderboard);
+    } catch (e) { /* network hiccup: try again next time */ }
+  }
+  drawTimer();
+  setInterval(() => { if (status === "live" && remaining > 0) { remaining--; } drawTimer(); }, 1000);
+  setInterval(refresh, 5000);
+</script>
+{% endblock %}

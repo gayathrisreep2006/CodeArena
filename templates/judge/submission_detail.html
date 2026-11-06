@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-submission-detail{% endblock %}
+{% block title %}Submission #{{ s.pk }} - CodeArena{% endblock %}
+{% block content %}
+<h2>Submission #{{ s.pk }}</h2>
+<p>
+  <a href="{% url 'problems:detail' s.problem.pk %}{% if s.room %}?room={{ s.room.code }}{% endif %}">{{ s.problem.title }}</a>
+  &middot; by {{ s.user.username }} &middot; {{ s.submitted_at|date:"d M Y, H:i:s" }}
+  {% if s.room %}&middot; contest <code>{{ s.room.code }}</code>{% endif %}
+</p>
+<div class="alert {% if s.verdict == 'accepted' %}alert-success{% else %}alert-danger{% endif %}">
+  <strong>{{ s.get_verdict_display }}</strong> &mdash; passed {{ s.passed_cases }} of {{ s.total_cases }} test cases, {{ s.runtime_ms }} ms
+  {% if s.error_message %}<pre class="mb-0 mt-2">{{ s.error_message }}</pre>{% endif %}
+</div>
+<h5>Code</h5>
+<pre class="border rounded p-3 bg-white">{{ s.code }}</pre>
+<a class="btn btn-outline-secondary" href="{% url 'judge:my_submissions' %}">My submissions</a>
+{% endblock %}

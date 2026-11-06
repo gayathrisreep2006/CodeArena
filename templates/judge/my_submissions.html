@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-submissions{% endblock %}
+{% block title %}My Submissions - CodeArena{% endblock %}
+{% block content %}
+<h2>My Submissions</h2>
+<form class="row g-2 my-3" method="get">
+  <div class="col-md-4">
+    <select class="form-select" name="verdict">
+      <option value="">All verdicts</option>
+      {% for value, label in verdict_choices %}
+        <option value="{{ value }}" {% if verdict == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-auto"><button class="btn btn-primary">Filter</button> <a class="btn btn-outline-secondary" href="{% url 'judge:my_submissions' %}">Reset</a></div>
+</form>
+<table class="table table-hover align-middle">
+  <thead><tr><th>Problem</th><th>Contest</th><th>Verdict</th><th>Passed</th><th>Time</th><th>Submitted</th><th></th></tr></thead>
+  <tbody>
+    {% for s in page_obj %}
+      <tr>
+        <td><a href="{% url 'problems:detail' s.problem.pk %}">{{ s.problem.title }}</a></td>
+        <td>{% if s.room %}<code>{{ s.room.code }}</code>{% else %}-{% endif %}</td>
+        <td><span class="badge {% if s.verdict == 'accepted' %}text-bg-success{% elif s.verdict == 'pending' %}text-bg-secondary{% else %}text-bg-danger{% endif %}">{{ s.get_verdict_display }}</span></td>
+        <td>{{ s.passed_cases }}/{{ s.total_cases }}</td>
+        <td>{{ s.runtime_ms }} ms</td>
+        <td>{{ s.submitted_at|date:"d M Y, H:i" }}</td>
+        <td><a href="{% url 'judge:detail' s.pk %}">View</a></td>
+      </tr>
+    {% empty %}<tr><td colspan="7" class="text-muted">No submissions yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include "partials/pagination.html" %}
+{% endblock %}

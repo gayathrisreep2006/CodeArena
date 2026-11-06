@@ -1,0 +1,713 @@
+{% extends "base.html" %}
+
+{% block title %}CodeArena | Ready, Set, Code!{% endblock %}
+{% block body_class %}page-home{% endblock %}
+
+{% block content %}
+<section class="home-hero">
+    <div class="hero-glow glow-one"></div>
+    <div class="hero-glow glow-two"></div>
+
+    <div class="hero-content">
+        <span class="hero-badge">✦ YOUR CODING JOURNEY STARTS HERE</span>
+
+        <h1>
+            Ready, Set,<br>
+            <span class="hero-highlight">Code.</span>
+        </h1>
+
+        <p class="hero-description">
+            Challenge yourself, solve problems, compete with friends,
+            and turn your coding skills into something extraordinary.
+        </p>
+
+        <div class="hero-actions">
+            <a href="/problems/" class="hero-btn primary-btn">
+                Explore Problems <span>→</span>
+            </a>
+
+            <a href="/dashboard/" class="hero-btn secondary-btn">
+                My Dashboard
+            </a>
+        </div>
+
+        <div class="hero-note">
+            <span class="status-dot"></span>
+            Learn. Practice. Compete. Improve.
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+
+        <div class="code-window">
+            <div class="window-header">
+                <div class="window-dots">
+                    <span></span><span></span><span></span>
+                </div>
+                <span class="window-title">main.py</span>
+                <span class="window-symbol">⌘</span>
+            </div>
+
+            <div class="code-content">
+                <p><span class="line-number">01</span> <span class="code-purple">def</span> <span class="code-gold">your_journey</span>():</p>
+                <p><span class="line-number">02</span> &nbsp;&nbsp;skills = <span class="code-green">"growing"</span></p>
+                <p><span class="line-number">03</span> &nbsp;&nbsp;while <span class="code-purple">True</span>:</p>
+                <p><span class="line-number">04</span> &nbsp;&nbsp;&nbsp;&nbsp;practice()</p>
+                <p><span class="line-number">05</span> &nbsp;&nbsp;&nbsp;&nbsp;improve()</p>
+                <p><span class="line-number">06</span> &nbsp;&nbsp;<span class="code-purple">return</span> success</p>
+
+                <div class="code-result">
+                    <span class="result-check">✓</span>
+                    <span>Ready to execute your potential.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="floating-card floating-top">
+            <span class="floating-icon">✦</span>
+            <div>
+                <strong>Keep Building</strong>
+                <small>One problem at a time</small>
+            </div>
+        </div>
+
+        <div class="floating-card floating-bottom">
+            <span class="floating-icon trophy-icon">♛</span>
+            <div>
+                <strong>Enter the Arena</strong>
+                <small>Your next challenge awaits</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="home-features">
+    <div class="features-heading">
+        <span class="section-eyebrow">WHAT'S YOUR NEXT MOVE?</span>
+        <h2>More than just <span>coding.</span></h2>
+        <p>Build your skills, challenge your limits, and rise through the ranks.</p>
+    </div>
+
+    <div class="feature-grid">
+        <a href="/problems/" class="feature-card">
+            <div class="feature-icon">⌘</div>
+            <span class="feature-number">01 / PRACTICE</span>
+            <h3>Explore Problems</h3>
+            <p>Sharpen your logic with programming challenges and put your skills to the test.</p>
+            <span class="feature-link">Start solving <span>↗</span></span>
+        </a>
+
+        <a href="/arena/" class="feature-card">
+            <div class="feature-icon">✧</div>
+            <span class="feature-number">02 / COMPETE</span>
+            <h3>Quiz Arena</h3>
+            <p>Test your technical knowledge, answer questions, and challenge your friends.</p>
+            <span class="feature-link">Enter arena <span>↗</span></span>
+        </a>
+
+        <a href="/arena/" class="feature-card">
+            <div class="feature-icon">⚔</div>
+            <span class="feature-number">03 / BATTLE</span>
+            <h3>Battle Arena</h3>
+            <p>Bring your friends together and turn coding challenges into a competition.</p>
+            <span class="feature-link">Join the battle <span>↗</span></span>
+        </a>
+
+        <a href="/dashboard/" class="feature-card">
+            <div class="feature-icon">♛</div>
+            <span class="feature-number">04 / ACHIEVE</span>
+            <h3>Leaderboard</h3>
+            <p>Track your progress, celebrate your achievements, and aim higher.</p>
+            <span class="feature-link">View rankings <span>↗</span></span>
+        </a>
+    </div>
+</section>
+
+<style>
+.page-home {
+    --wine: #70243f;
+    --deep-wine: #421326;
+    --rose: #a64d6b;
+    --cream: #fff8f0;
+    --beige: #f2e6da;
+    --ink: #34232b;
+}
+
+.page-home .home-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: 30px;
+    min-height: 510px;
+    padding: 60px 7%;
+    border: 1px solid rgba(112, 36, 63, 0.16);
+    border-radius: 28px;
+    background: linear-gradient(125deg, #fff8f0 0%, #f5e7e1 48%, #ead2d8 100%);
+    box-shadow: 0 20px 60px rgba(74, 21, 42, 0.09);
+    animation: homeFadeIn 0.9s ease both;
+}
+
+.page-home .hero-glow {
+    position: absolute;
+    z-index: -1;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    filter: blur(65px);
+    opacity: 0.24;
+    pointer-events: none;
+}
+
+.page-home .glow-one {
+    top: -110px;
+    right: 15%;
+    background: #a64d6b;
+    animation: glowFloat 8s ease-in-out infinite alternate;
+}
+
+.page-home .glow-two {
+    bottom: -150px;
+    left: 20%;
+    background: #70243f;
+    animation: glowFloat 10s ease-in-out infinite alternate-reverse;
+}
+
+.page-home .hero-content {
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.8s 0.15s both;
+}
+
+.page-home .hero-badge {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 1px solid rgba(112, 36, 63, 0.18);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.6);
+    color: #70243f;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.6px;
+}
+
+.page-home .hero-content h1 {
+    margin: 24px 0 16px;
+    color: #421326;
+    font-size: clamp(48px, 6vw, 76px);
+    font-weight: 850;
+    line-height: 0.99;
+    letter-spacing: -3px;
+}
+
+.page-home .hero-highlight {
+    background: linear-gradient(100deg, #70243f, #b65d79);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-home .hero-description {
+    max-width: 440px;
+    color: #705863;
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+.page-home .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.page-home .hero-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 13px 20px;
+    border: 1px solid #70243f;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 750;
+    text-decoration: none;
+    transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+}
+
+.page-home .primary-btn {
+    background: linear-gradient(135deg, #70243f, #4a152a);
+    color: #fff8f0;
+    box-shadow: 0 8px 22px rgba(74, 21, 42, 0.2);
+}
+
+.page-home .secondary-btn {
+    background: rgba(255, 255, 255, 0.52);
+    color: #70243f;
+}
+
+.page-home .hero-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 26px rgba(74, 21, 42, 0.2);
+}
+
+.page-home .primary-btn:hover {
+    background: #8e3455;
+    color: white;
+}
+
+.page-home .secondary-btn:hover {
+    background: white;
+    color: #421326;
+}
+
+.page-home .hero-note {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 25px;
+    color: #806875;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+}
+
+.page-home .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #a64d6b;
+    box-shadow: 0 0 0 4px rgba(166, 77, 107, 0.13);
+    animation: pulseDot 2s infinite;
+}
+
+.page-home .hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 350px;
+    animation: slideUp 1s 0.3s both;
+}
+
+.page-home .code-window {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 390px);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 17px;
+    background: linear-gradient(145deg, #4b1b32, #28121f);
+    box-shadow: 0 28px 65px rgba(49, 15, 32, 0.28);
+    animation: windowFloat 5s ease-in-out infinite;
+}
+
+.page-home .window-header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px 17px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.page-home .window-dots {
+    display: flex;
+    gap: 5px;
+}
+
+.page-home .window-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #b75b77;
+}
+
+.page-home .window-dots span:nth-child(2) { background: #d9a16c; }
+.page-home .window-dots span:nth-child(3) { background: #8ab7a0; }
+
+.page-home .window-title {
+    flex: 1;
+    color: #d9beca;
+    font-size: 11px;
+}
+
+.page-home .window-symbol { color: #c78da4; }
+
+.page-home .code-content {
+    padding: 22px 15px;
+    color: #f4e4eb;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: clamp(10px, 1.2vw, 12px);
+    line-height: 2.15;
+    white-space: nowrap;
+}
+
+.page-home .code-content p { margin: 0; }
+
+.page-home .line-number {
+    display: inline-block;
+    width: 25px;
+    color: #8e6879;
+}
+
+.page-home .code-purple { color: #d69bc8; }
+.page-home .code-gold { color: #edc58f; }
+.page-home .code-green { color: #9bd4b3; }
+
+.page-home .code-result {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 18px;
+    padding: 11px 10px;
+    border: 1px solid rgba(155, 212, 179, 0.16);
+    border-radius: 8px;
+    background: rgba(155, 212, 179, 0.07);
+    color: #b6ddc4;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    white-space: normal;
+}
+
+.page-home .result-check {
+    display: grid;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 50%;
+    background: #305b45;
+    color: #c3f2d4;
+}
+
+.page-home .orbit {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border: 1px solid rgba(112, 36, 63, 0.14);
+    border-radius: 50%;
+    animation: orbitRotate 30s linear infinite;
+}
+
+.page-home .orbit-two {
+    width: 290px;
+    height: 290px;
+    border-style: dashed;
+    animation-direction: reverse;
+    animation-duration: 40s;
+}
+
+.page-home .floating-card {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 13px 16px;
+    border: 1px solid rgba(112, 36, 63, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 248, 240, 0.94);
+    box-shadow: 0 12px 30px rgba(74, 21, 42, 0.12);
+    animation: cardFloat 4s ease-in-out infinite;
+}
+
+.page-home .floating-top {
+    top: 15px;
+    right: -5px;
+}
+
+.page-home .floating-bottom {
+    bottom: 14px;
+    left: -14px;
+    animation-delay: -2s;
+}
+
+.page-home .floating-icon {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 9px;
+    background: #f0dce3;
+    color: #70243f;
+    font-size: 18px;
+}
+
+.page-home .trophy-icon {
+    background: #70243f;
+    color: #fff8f0;
+}
+
+.page-home .floating-card strong,
+.page-home .floating-card small { display: block; }
+
+.page-home .floating-card strong {
+    color: #421326;
+    font-size: 11px;
+}
+
+.page-home .floating-card small {
+    margin-top: 4px;
+    color: #8a707b;
+    font-size: 9px;
+}
+
+.page-home .home-features { padding: 80px 0 35px; }
+
+.page-home .features-heading {
+    margin-bottom: 30px;
+    text-align: center;
+    animation: slideUp 0.8s both;
+}
+
+.page-home .section-eyebrow {
+    color: #8e3455;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.page-home .features-heading h2 {
+    margin: 12px 0;
+    color: #421326;
+    font-size: clamp(27px, 4vw, 38px);
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.page-home .features-heading h2 span { color: #8e3455; }
+
+.page-home .features-heading p {
+    color: #806875;
+    font-size: 13px;
+}
+
+.page-home .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.page-home .feature-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 250px;
+    padding: 24px 20px;
+    overflow: hidden;
+    border: 1px solid rgba(112, 36, 63, 0.13);
+    border-radius: 17px;
+    background: linear-gradient(145deg, #fffaf5, #f8eee9);
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(74, 21, 42, 0.035);
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    animation: slideUp 0.7s both;
+}
+
+.page-home .feature-card:nth-child(2) { animation-delay: 0.1s; }
+.page-home .feature-card:nth-child(3) { animation-delay: 0.2s; }
+.page-home .feature-card:nth-child(4) { animation-delay: 0.3s; }
+
+.page-home .feature-card::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #70243f, #c27b94);
+    content: "";
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s;
+}
+
+.page-home .feature-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(112, 36, 63, 0.35);
+    box-shadow: 0 20px 38px rgba(74, 21, 42, 0.11);
+}
+
+.page-home .feature-card:hover::before { transform: scaleX(1); }
+
+.page-home .feature-icon {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    margin-bottom: 24px;
+    place-items: center;
+    border: 1px solid rgba(112, 36, 63, 0.12);
+    border-radius: 12px;
+    background: #f0dce3;
+    color: #70243f;
+    font-size: 22px;
+    transition: transform 0.3s, background 0.3s, color 0.3s;
+}
+
+.page-home .feature-card:hover .feature-icon {
+    transform: rotate(-6deg) scale(1.08);
+    background: #70243f;
+    color: #fff8f0;
+}
+
+.page-home .feature-number {
+    color: #a47c8b;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.page-home .feature-card h3 {
+    margin: 9px 0;
+    color: #421326;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.page-home .feature-card p {
+    flex: 1;
+    color: #806875;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.page-home .feature-link {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    color: #70243f;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.page-home .feature-link span { transition: transform 0.25s; }
+
+.page-home .feature-card:hover .feature-link span {
+    transform: translate(3px, -3px);
+}
+
+@keyframes homeFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowFloat {
+    from { transform: translate(0, 0) scale(0.9); }
+    to { transform: translate(25px, 20px) scale(1.15); }
+}
+
+@keyframes windowFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-9px); }
+}
+
+@keyframes cardFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+@keyframes orbitRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(166, 77, 107, 0.13); }
+    50% { box-shadow: 0 0 0 7px rgba(166, 77, 107, 0.04); }
+}
+
+@media (max-width: 992px) {
+    .page-home .home-hero {
+        grid-template-columns: 1fr;
+        padding: 45px 7%;
+    }
+
+    .page-home .hero-content { text-align: center; }
+
+    .page-home .hero-description {
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .page-home .hero-actions,
+    .page-home .hero-note { justify-content: center; }
+
+    .page-home .hero-visual { min-height: 370px; }
+
+    .page-home .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 576px) {
+    .page-home .home-hero {
+        padding: 38px 20px;
+        border-radius: 20px;
+    }
+
+    .page-home .hero-content h1 {
+        font-size: 52px;
+        letter-spacing: -2px;
+    }
+
+    .page-home .hero-badge {
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+
+    .page-home .hero-description { font-size: 13px; }
+
+    .page-home .hero-actions { flex-direction: column; }
+
+    .page-home .hero-btn { width: 100%; }
+
+    .page-home .hero-visual { min-height: 300px; }
+
+    .page-home .orbit {
+        width: 275px;
+        height: 275px;
+    }
+
+    .page-home .orbit-two {
+        width: 235px;
+        height: 235px;
+    }
+
+    .page-home .floating-top {
+        right: -5px;
+        top: 0;
+    }
+
+    .page-home .floating-bottom {
+        left: -5px;
+        bottom: 0;
+    }
+
+    .page-home .floating-card { padding: 10px; }
+
+    .page-home .feature-grid { grid-template-columns: 1fr; }
+
+    .page-home .home-features { padding-top: 55px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-home *,
+    .page-home *::before,
+    .page-home *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+</style>
+{% endblock %}

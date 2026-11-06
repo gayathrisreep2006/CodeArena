@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-users{% endblock %}
+{% block title %}Users - CodeArena{% endblock %}
+{% block content %}
+<h2>Users <small class="text-muted fs-6">(Admin only)</small></h2>
+<form class="row g-2 my-3" method="get">
+  <div class="col-md-5"><input class="form-control" name="q" value="{{ q }}" placeholder="Search username or email"></div>
+  <div class="col-md-3">
+    <select class="form-select" name="role">
+      <option value="">All roles</option>
+      <option value="player" {% if role == "player" %}selected{% endif %}>Player</option>
+      <option value="host" {% if role == "host" %}selected{% endif %}>Host</option>
+      <option value="admin" {% if role == "admin" %}selected{% endif %}>Admin</option>
+    </select>
+  </div>
+  <div class="col-auto"><button class="btn btn-primary">Filter</button> <a class="btn btn-outline-secondary" href="{% url 'accounts:user_list' %}">Reset</a></div>
+</form>
+<table class="table table-hover align-middle">
+  <thead><tr><th>Username</th><th>Email</th><th>Role</th><th>Joined</th><th>Change role</th></tr></thead>
+  <tbody>
+  {% for u in page_obj %}
+    <tr>
+      <td>{{ u.username }}</td><td>{{ u.email }}</td>
+      <td><span class="badge text-bg-secondary">{{ u.profile.role }}</span></td>
+      <td>{{ u.date_joined|date:"d M Y" }}</td>
+      <td>
+        {% if u != user %}
+        <form method="post" action="{% url 'accounts:change_role' u.id %}" class="d-flex gap-2">
+          {% csrf_token %}
+          <select name="role" class="form-select form-select-sm">
+            <option value="player" {% if u.profile.role == "player" %}selected{% endif %}>Player</option>
+            <option value="host" {% if u.profile.role == "host" %}selected{% endif %}>Host</option>
+            <option value="admin" {% if u.profile.role == "admin" %}selected{% endif %}>Admin</option>
+          </select>
+          <button class="btn btn-sm btn-outline-primary">Save</button>
+        </form>
+        {% else %}<span class="text-muted small">you</span>{% endif %}
+      </td>
+    </tr>
+  {% empty %}<tr><td colspan="5" class="text-muted">No users found.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% include "partials/pagination.html" %}
+{% endblock %}
